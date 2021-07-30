@@ -89,9 +89,9 @@ def make_overlap(points, labels, polygons, min_overlap=0.0, max_overlap=1.0):
         overlap = compute_overlap(new_points, new_polygons)
     return new_points, new_polygons
 
-def random_poly(center=[0.0, 0.0], n_vertices=None, max_radius=1.0, min_radius=0.0, random_state=None):
+def random_poly(center=[0.0, 0.0], n_vertices=None, max_radius=1.0, min_radius=0.0, contains_center=False, random_state=None):
     """
-    Generates a random star-shaped polygon about a point.
+    Generates a random polygon about a point.
 
     Parameters
     ----------
@@ -106,6 +106,9 @@ def random_poly(center=[0.0, 0.0], n_vertices=None, max_radius=1.0, min_radius=0
 
     min_radius : float, default=0.0
         The minimum distance from a vertex to the center. Must be less than or equal to min_radius and must be >= 0.
+
+    contains_center : bool, default=False
+        Ensure that the polygon contains the center point.
 
     random_state : int, RandomState instance or None, default=None
         Determines random number generation for dataset creation. Pass an int
@@ -129,9 +132,24 @@ def random_poly(center=[0.0, 0.0], n_vertices=None, max_radius=1.0, min_radius=0
     generator = np.random.default_rng(random_state)
     if n_vertices == None:
         n_vertices = generator.integers(3, 21)
-    vertices = generator.random((n_vertices + 1, 2)) * [max_radius - min_radius, 2 * math.pi] + [min_radius, 0.0]
-    vertices = vertices[vertices[:,1].argsort()]
-    return path.Path((np.array([vertices[:,0] * np.cos(vertices[:,1]), vertices[:,0] * np.sin(vertices[:,1])]).transpose()) + center, closed=True)
+    vertices = np.empty((n_vertices + 1, 2))
+    if contains_center:
+        if n_vertices == 3:
+            vertices[0] = generator.random((1, 2)) \
+                * [max_radius - min_radius, 2 * math.pi] + [min_radius, 0]
+            vertices[1] = generator.random((1, 2)) \
+                * [max_radius - min_radius, math.pi] + [min_radius, vertices[0,1]]
+            vertices[2] = generator.random((1, 2)) \
+                * [max_radius - min_radius, vertices[1, 1] - vertices[0, 1]] + [min_radius, vertices[0, 1] + math.pi]
+        else:
+            for i in range(n_vertices):
+                vertices[i] = generator.random((1, 2)) * [max_radius - min_radius, 2 * math.pi / n_vertices] + [min_radius, i * 2 * math.pi / n_vertices]
+    else:
+        vertices = generator.random((n_vertices + 1, 2)) * [max_radius - min_radius, 2 * math.pi] + [min_radius, 0.0]
+        vertices = vertices[vertices[:,1].argsort()]
+    vertices[n_vertices] = vertices[0]
+    vertices = np.array([vertices[:,0] * np.cos(vertices[:,1]), vertices[:,0] * np.sin(vertices[:,1])]).transpose() + center
+    return path.Path(vertices, closed=True)
 
 def sample_poly(n_samples, polygon,
     dimension=2, distribution=None, center=None, std=1.0, outside=0.0, shuffle=True, random_state=None, max_iter=1000):
@@ -224,8 +242,8 @@ def sample_poly(n_samples, polygon,
     return X
 
 def make_poly(n_samples=100, n_poly=1, dimension=2, *,
-    min_center_distance=0.0, max_radius=1.0, min_radius=0.0, 
-    outside=0.0, distribution=None, std=1.0, centers=None,
+    min_center_distance=0.0, max_radius=1.0, min_radius=0.0,
+    outside=0.0, distribution=None, std=1.0, centers=None,  contain_centers=False,
     bounding_box=(-10.0, 10.0), shuffle=True, random_state=None,
     max_iter=10):
     """
@@ -274,6 +292,10 @@ def make_poly(n_samples=100, n_poly=1, dimension=2, *,
     centers : ndarray of size (n_poly, 2) or None, default=None
         The centers around which to generate vertices, and points if the distribution is "Gaussian".
         If None, then centers will be randomly generated.
+    
+    contain_centers : bool or array-like, default=False
+        If bool, ensures that each polygon contains the point around which it is generated.
+        If array-like, each element of the sequence gives this condition to the corresponding generated polygon.
     
     bounding_box : tuple of float (min, max), default=(-10.0, 10.0)
         The bounding box for each cluster center when centers are
@@ -357,6 +379,13 @@ def make_poly(n_samples=100, n_poly=1, dimension=2, *,
     else:
         std_per_poly = [std for i in range(n_poly)]
 
+    if isinstance(contain_centers, collections.abc.Iterable):
+        if len(contain_centers) != n_poly:
+            raise ValueError('Length of contain_centers must match n_poly')
+        contain_per_poly = contain_centers
+    else:
+        contain_per_poly = [contain_centers for i in range(n_poly)]
+
     if isinstance(centers, collections.abc.Iterable) and len(centers) != n_poly:
             raise ValueError('Length of centers must match n_poly')
     elif isinstance(centers, numbers.Integral):
@@ -369,12 +398,12 @@ def make_poly(n_samples=100, n_poly=1, dimension=2, *,
     y = np.empty([1, 0], dtype=int)
 
     label = 0
-    for (samples, out, dist, stdev, center, max_r, min_r) in \
-        zip(samples_per_poly, out_per_poly, dist_per_poly, std_per_poly, centers, max_r_per_poly, min_r_per_poly):
+    for (samples, out, dist, stdev, center, contains_center, max_r, min_r) in \
+        zip(samples_per_poly, out_per_poly, dist_per_poly, std_per_poly, centers, contain_per_poly, max_r_per_poly, min_r_per_poly):
         for i in range(max_iter):
             with warnings.catch_warnings():
                 warnings.filterwarnings('error')
-                polygon = random_poly([0.0, 0.0], None, max_r, min_r, generator)
+                polygon = random_poly([0.0, 0.0], None, max_r, min_r, contains_center, generator)
                 X_new = np.empty([0, dimension])
                 try:
                     X_new = sample_poly(samples, polygon, dimension, dist, np.zeros([1, dimension]), stdev, out, shuffle, random_state) + center
