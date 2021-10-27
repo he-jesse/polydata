@@ -1,0 +1,162 @@
+@inproceedings{lime,
+author = {Ribeiro, Marco Tulio and Singh, Sameer and Guestrin, Carlos},
+title = {"Why Should I Trust You?": Explaining the Predictions of Any Classifier},
+year = {2016},
+isbn = {9781450342322},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2939672.2939778},
+doi = {10.1145/2939672.2939778},
+booktitle = {Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
+pages = {1135–1144},
+numpages = {10},
+keywords = {interpretability, interpretable machine learning, black box classifier, explaining machine learning},
+location = {San Francisco, California, USA},
+series = {KDD '16}
+}
+
+@InProceedings{polygon-mining,
+author="Akdag, Fatih
+and Eick, Christoph F.
+and Chen, Guoning",
+editor="Andreasen, Troels
+and Christiansen, Henning
+and Cubero, Juan-Carlos
+and Ra{\'{s}}, Zbigniew W.",
+title="Creating Polygon Models for Spatial Clusters",
+booktitle="Foundations of Intelligent Systems",
+year="2014",
+publisher="Springer International Publishing",
+address="Cham",
+pages="493--499",
+abstract="This paper proposes a novel methodology for creating efficient polygon models for spatial datasets. A comprehensive analysis framework is proposed that takes a spatial cluster as an input and generates a polygon model for the cluster as an output. The framework creates a visually appealing, simple, and smooth polygon for the cluster by minimizing a fitness function. We propose a novel polygon fitness function for this task. Moreover, a novel emptiness measure is introduced for quantifying the presence of empty spaces inside polygons.",
+isbn="978-3-319-08326-1"
+}
+
+@ARTICLE{xai-pp,
+  
+AUTHOR={Belle, Vaishak and Papantonis, Ioannis},   
+	 
+TITLE={Principles and Practice of Explainable Machine Learning},      
+	
+JOURNAL={Frontiers in Big Data},      
+	
+VOLUME={4},      
+
+PAGES={39},     
+	
+YEAR={2021},      
+	  
+URL={https://www.frontiersin.org/article/10.3389/fdata.2021.688969},       
+	
+DOI={10.3389/fdata.2021.688969},      
+	
+ISSN={2624-909X},   
+   
+ABSTRACT={Artificial intelligence (AI) provides many opportunities to improve private and public life. Discovering patterns and structures in large troves of data in an automated manner is a core component of data science, and currently drives applications in diverse areas such as computational biology, law and finance. However, such a highly positive impact is coupled with a significant challenge: how do we understand the decisions suggested by these systems in order that we can trust them? In this report, we focus specifically on data-driven methods—machine learning (ML) and pattern recognition models in particular—so as to survey and distill the results and observations from the literature. The purpose of this report can be especially appreciated by noting that ML models are increasingly deployed in a wide range of businesses. However, with the increasing prevalence and complexity of methods, business stakeholders in the very least have a growing number of concerns about the drawbacks of models, data-specific biases, and so on. Analogously, data science practitioners are often not aware about approaches emerging from the academic literature or may struggle to appreciate the differences between different methods, so end up using industry standards such as SHAP. Here, we have undertaken a survey to help industry practitioners (but also data scientists more broadly) understand the field of explainable machine learning better and apply the right tools. Our latter sections build a narrative around a putative data scientist, and discuss how she might go about explaining her models by asking the right questions. From an organization viewpoint, after motivating the area broadly, we discuss the main developments, including the principles that allow us to study transparent models vs. opaque models, as well as model-specific or model-agnostic post-hoc explainability approaches. We also briefly reflect on deep learning models, and conclude with a discussion about future research directions.}
+}
+
+@inproceedings{fooling,
+author = {Slack, Dylan and Hilgard, Sophie and Jia, Emily and Singh, Sameer and Lakkaraju, Himabindu},
+title = {Fooling LIME and SHAP: Adversarial Attacks on Post Hoc Explanation Methods},
+year = {2020},
+isbn = {9781450371100},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3375627.3375830},
+doi = {10.1145/3375627.3375830},
+abstract = {As machine learning black boxes are increasingly being deployed in domains such as
+healthcare and criminal justice, there is growing emphasis on building tools and techniques
+for explaining these black boxes in an interpretable manner. Such explanations are
+being leveraged by domain experts to diagnose systematic errors and underlying biases
+of black boxes. In this paper, we demonstrate that post hoc explanations techniques
+that rely on input perturbations, such as LIME and SHAP, are not reliable. Specifically,
+we propose a novel scaffolding technique that effectively hides the biases of any
+given classifier by allowing an adversarial entity to craft an arbitrary desired explanation.
+Our approach can be used to scaffold any biased classifier in such a way that its
+predictions on the input data distribution still remain biased, but the post hoc explanations
+of the scaffolded classifier look innocuous. Using extensive evaluation with multiple
+real world datasets (including COMPAS), we demonstrate how extremely biased (racist)
+classifiers crafted by our framework can easily fool popular explanation techniques
+such as LIME and SHAP into generating innocuous explanations which do not reflect
+the underlying biases.},
+booktitle = {Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society},
+pages = {180–186},
+numpages = {7},
+keywords = {bias detection, model interpretability, black box explanations, adversarial attacks},
+location = {New York, NY, USA},
+series = {AIES '20}
+}
+
+@Book{expma,
+  author = {Przemyslaw Biecek and Tomasz Burzykowski},
+  title = {{Explanatory Model Analysis}},
+  publisher = {Chapman and Hall/CRC},
+  address = {New York},
+  year = {2021},
+  isbn = {9780367135591},
+  url = {https://pbiecek.github.io/ema/},
+}
+
+@Article{matplotlib,
+  Author    = {Hunter, J. D.},
+  Title     = {Matplotlib: A 2D graphics environment},
+  Journal   = {Computing in Science \& Engineering},
+  Volume    = {9},
+  Number    = {3},
+  Pages     = {90--95},
+  abstract  = {Matplotlib is a 2D graphics package used for Python for
+  application development, interactive scripting, and publication-quality
+  image generation across user interfaces and operating systems.},
+  publisher = {IEEE COMPUTER SOC},
+  doi       = {10.1109/MCSE.2007.55},
+  year      = 2007
+}
+
+@article{scikit-learn,
+ title={Scikit-learn: Machine Learning in {P}ython},
+ author={Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V.
+         and Thirion, B. and Grisel, O. and Blondel, M. and Prettenhofer, P.
+         and Weiss, R. and Dubourg, V. and Vanderplas, J. and Passos, A. and
+         Cournapeau, D. and Brucher, M. and Perrot, M. and Duchesnay, E.},
+ journal={Journal of Machine Learning Research},
+ volume={12},
+ pages={2825--2830},
+ year={2011}
+}
+
+@inproceedings{sklearn_api,
+  author    = {Lars Buitinck and Gilles Louppe and Mathieu Blondel and
+               Fabian Pedregosa and Andreas Mueller and Olivier Grisel and
+               Vlad Niculae and Peter Prettenhofer and Alexandre Gramfort
+               and Jaques Grobler and Robert Layton and Jake VanderPlas and
+               Arnaud Joly and Brian Holt and Ga{\"{e}}l Varoquaux},
+  title     = {{API} design for machine learning software: experiences from the scikit-learn
+               project},
+  booktitle = {ECML PKDD Workshop: Languages for Data Mining and Machine Learning},
+  year      = {2013},
+  pages = {108--122},
+}
+
+@Article{numpy,
+ title         = {Array programming with {NumPy}},
+ author        = {Charles R. Harris and K. Jarrod Millman and St{\'{e}}fan J.
+                 van der Walt and Ralf Gommers and Pauli Virtanen and David
+                 Cournapeau and Eric Wieser and Julian Taylor and Sebastian
+                 Berg and Nathaniel J. Smith and Robert Kern and Matti Picus
+                 and Stephan Hoyer and Marten H. van Kerkwijk and Matthew
+                 Brett and Allan Haldane and Jaime Fern{\'{a}}ndez del
+                 R{\'{i}}o and Mark Wiebe and Pearu Peterson and Pierre
+                 G{\'{e}}rard-Marchant and Kevin Sheppard and Tyler Reddy and
+                 Warren Weckesser and Hameer Abbasi and Christoph Gohlke and
+                 Travis E. Oliphant},
+ year          = {2020},
+ month         = sep,
+ journal       = {Nature},
+ volume        = {585},
+ number        = {7825},
+ pages         = {357--362},
+ doi           = {10.1038/s41586-020-2649-2},
+ publisher     = {Springer Science and Business Media {LLC}},
+ url           = {https://doi.org/10.1038/s41586-020-2649-2}
+}
